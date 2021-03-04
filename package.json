@@ -1,0 +1,16 @@
+{
+  "name": "net.koyashiro.vrcfacemonitor",
+  "displayName": "VRC Face Monitor",
+  "version": "0.1.0",
+  "unity": "2018.4",
+  "description": "VRChat Avatar's Face Monitor",
+  "keywords": [
+    "VRChat",
+    "VRC"
+  ],
+  "author": {
+    "name": "Koyashiro Kohaku",
+    "email": "develop@koyashiro.net",
+    "url": "https://github.com/KoyashiroKohaku"
+  }
+}
