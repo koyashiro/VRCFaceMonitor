@@ -30,9 +30,9 @@ Material:
     m_Floats:
     - _Alpha: 1
     - _IsForceCorrectAspect: 1
-    - _OffsetX: 5.9
-    - _OffsetY: -1.3
-    - _Size: 2.57
+    - _OffsetX: 4.8
+    - _OffsetY: -2.8
+    - _Size: 1.6
     - _TexResX: 1920
     - _TexResY: 1080
     - _W: 4
