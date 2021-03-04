@@ -114,6 +114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FaceMonitor
       objectReference: {fileID: 0}
+    - target: {fileID: 2965608612227797140, guid: 4d77143b6f52d7a4c8352bdab061e35f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2965608612227797141, guid: 4d77143b6f52d7a4c8352bdab061e35f,
         type: 3}
       propertyPath: m_RootOrder
