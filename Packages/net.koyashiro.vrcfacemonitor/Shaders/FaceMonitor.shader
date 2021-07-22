@@ -9,6 +9,21 @@ Shader "KoyashiroKohaku/FaceMonitor"
         [HideInInspector] _Z ("Z", Range(-100, 100)) = -10
         [HideInInspector] _W ("W", Range(-100, 100)) = 4
         _Alpha ("Alpha", Range(0, 1)) = 1
+        [Space]
+        [IntRange] _TargetResolution0_X ("Target resolution0 X", Range(0, 9999)) = 1920
+        [IntRange] _TargetResolution0_Y ("Target resolution0 Y", Range(0, 9999)) = 1006
+        [Space]
+        [IntRange] _TargetResolution1_X ("Target resolution1 X", Range(0, 9999)) = 2188
+        [IntRange] _TargetResolution1_Y ("Target resolution1 Y", Range(0, 9999)) = 2432
+        [Space]
+        [IntRange] _TargetResolution2_X ("Target resolution2 X", Range(0, 9999)) = 0
+        [IntRange] _TargetResolution2_Y ("Target resolution2 Y", Range(0, 9999)) = 0
+        [Space]
+        [IntRange] _TargetResolution3_X ("Target resolution3 X", Range(0, 9999)) = 0
+        [IntRange] _TargetResolution3_Y ("Target resolution3 Y", Range(0, 9999)) = 0
+        [Space]
+        [IntRange] _TargetResolution4_X ("Target resolution4 X", Range(0, 9999)) = 0
+        [IntRange] _TargetResolution4_Y ("Target resolution4 Y", Range(0, 9999)) = 0
     }
 
     SubShader
@@ -52,6 +67,12 @@ Shader "KoyashiroKohaku/FaceMonitor"
             float _W;
             float _Alpha;
 
+            float _TargetResolution0_X, _TargetResolution0_Y;
+            float _TargetResolution1_X, _TargetResolution1_Y;
+            float _TargetResolution2_X, _TargetResolution2_Y;
+            float _TargetResolution3_X, _TargetResolution3_Y;
+            float _TargetResolution4_X, _TargetResolution4_Y;
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -70,9 +91,16 @@ Shader "KoyashiroKohaku/FaceMonitor"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                col.w *= _Alpha;
-                return col;
+                if (_TargetResolution0_X == _ScreenParams.x && _TargetResolution0_Y == _ScreenParams.y
+                    || _TargetResolution1_X == _ScreenParams.x && _TargetResolution1_Y == _ScreenParams.y
+                    || _TargetResolution2_X == _ScreenParams.x && _TargetResolution2_Y == _ScreenParams.y
+                    || _TargetResolution3_X == _ScreenParams.x && _TargetResolution3_Y == _ScreenParams.y
+                    || _TargetResolution4_X == _ScreenParams.x && _TargetResolution4_Y == _ScreenParams.y)
+                {
+                    return tex2D(_MainTex, i.uv) * half4(1, 1, 1, _Alpha);
+                }
+
+                return fixed4(0, 0, 0, 0);
             }
             ENDCG
         }
