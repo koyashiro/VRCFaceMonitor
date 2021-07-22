@@ -91,16 +91,22 @@ Shader "KoyashiroKohaku/FaceMonitor"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                if (_TargetResolution0_X == _ScreenParams.x && _TargetResolution0_Y == _ScreenParams.y
-                    || _TargetResolution1_X == _ScreenParams.x && _TargetResolution1_Y == _ScreenParams.y
-                    || _TargetResolution2_X == _ScreenParams.x && _TargetResolution2_Y == _ScreenParams.y
-                    || _TargetResolution3_X == _ScreenParams.x && _TargetResolution3_Y == _ScreenParams.y
-                    || _TargetResolution4_X == _ScreenParams.x && _TargetResolution4_Y == _ScreenParams.y)
+                fixed4 col;
+
+                if ((_TargetResolution0_X == _ScreenParams.x && _TargetResolution0_Y == _ScreenParams.y)
+                    || (_TargetResolution1_X == _ScreenParams.x && _TargetResolution1_Y == _ScreenParams.y)
+                    || (_TargetResolution2_X == _ScreenParams.x && _TargetResolution2_Y == _ScreenParams.y)
+                    || (_TargetResolution3_X == _ScreenParams.x && _TargetResolution3_Y == _ScreenParams.y)
+                    || (_TargetResolution4_X == _ScreenParams.x && _TargetResolution4_Y == _ScreenParams.y))
                 {
-                    return tex2D(_MainTex, i.uv) * half4(1, 1, 1, _Alpha);
+                    col = tex2D(_MainTex, i.uv) * half4(1, 1, 1, _Alpha);
+                }
+                else
+                {
+                    discard;
                 }
 
-                return fixed4(0, 0, 0, 0);
+                return col;
             }
             ENDCG
         }
