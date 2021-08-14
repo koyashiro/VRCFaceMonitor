@@ -10,14 +10,17 @@ Shader "KoyashiroKohaku/FaceMonitor"
         [HideInInspector] _W ("W", Range(-100, 100)) = 4
         _Alpha ("Alpha", Range(0, 1)) = 1
         [Space]
+        // Desktop
         [IntRange] _TargetResolution0_X ("Target resolution0 X", Range(0, 9999)) = 1920
         [IntRange] _TargetResolution0_Y ("Target resolution0 Y", Range(0, 9999)) = 1006
         [Space]
+        // Valve Index
         [IntRange] _TargetResolution1_X ("Target resolution1 X", Range(0, 9999)) = 2188
         [IntRange] _TargetResolution1_Y ("Target resolution1 Y", Range(0, 9999)) = 2432
         [Space]
-        [IntRange] _TargetResolution2_X ("Target resolution2 X", Range(0, 9999)) = 0
-        [IntRange] _TargetResolution2_Y ("Target resolution2 Y", Range(0, 9999)) = 0
+        // Valve Index
+        [IntRange] _TargetResolution2_X ("Target resolution2 X", Range(0, 9999)) = 2208
+        [IntRange] _TargetResolution2_Y ("Target resolution2 Y", Range(0, 9999)) = 2452
         [Space]
         [IntRange] _TargetResolution3_X ("Target resolution3 X", Range(0, 9999)) = 0
         [IntRange] _TargetResolution3_Y ("Target resolution3 Y", Range(0, 9999)) = 0
