@@ -28,18 +28,18 @@ VRC アバター用の表情確認用モニター。
 
 ## アバターへの導入手順
 
-1. `Package/VRC Face Monitor` を開き、`FaceMonitor.prefab` をアバターの prefab 内に入れる。
+1. `Package/VRC Face Monitor` を開き、`HeadConstraint.prefab` をアバターの prefab 内に入れる。
 
-   ![image](https://user-images.githubusercontent.com/6698252/130225133-8aff41b4-65c8-4937-923b-14404f5c60c4.png)
+   ![image](https://user-images.githubusercontent.com/6698252/130229663-bdd4fc84-3608-43ba-9302-12cd1619fd3d.png)
 
-2. `FaceMonitor` の Position を変更し、カメラの位置を調整する。
+2. `HeadConstraint` の `Position Constraint` 及び `Rotation Constraint` の `Sources` にアバターの Head ボーンを設定する。
+
+   ![image](https://user-images.githubusercontent.com/6698252/130229971-132b86cb-7f5b-4227-8986-59dc0cd6daf4.png)
+
+3. `HeadConstraint` の `Position Constraint` 及び `Rotation Constraint` の `ZERO` ボタンを押す。
+
+   ![image](https://user-images.githubusercontent.com/6698252/130230064-6ab6c6e8-04d2-495d-98b4-4ee4fe715e78.png)
+
+4. `HeadConstraint/FaceMonitor` の Position を変更し、カメラの位置を調整する( `HeadConstraint` の Position は変更しない)。
 
    ![image](https://user-images.githubusercontent.com/6698252/130225782-ead3e856-9ced-43ad-8b67-35612b1258eb.png)
-
-3. `FaceMonitor` の `Position Constraint` 及び `Rotation Constraint` の `Sources` にアバターの Head ボーンを設定する。
-
-   ![image](https://user-images.githubusercontent.com/6698252/130226309-051c4d95-6a90-4520-aee9-ab4a0ac4ccf0.png)
-
-4. `FaceMonitor` の `Position Constraint` 及び `Rotation Constraint` の `ZERO` ボタンを押す。
-
-   ![image](https://user-images.githubusercontent.com/6698252/130226414-c1b93b67-1550-46e1-96aa-4f1178f54478.png)
