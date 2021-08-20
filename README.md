@@ -6,7 +6,7 @@ VRC アバター用の表情確認用モニター。
 
 ## Package URL
 
-`https://github.com/koyashiro/VRCFaceMonitor.git?path=Packages/net.koyashiro.vrcfacemonitor`
+`https://github.com/koyashiro/VRCFaceMonitor.git`
 
 ## Unity Package Manager によるインストール
 
@@ -18,7 +18,7 @@ VRC アバター用の表情確認用モニター。
 
    ![image](https://user-images.githubusercontent.com/6698252/126033246-b82e6d11-198e-4617-a006-ebf086518892.png)
 
-3. `https://github.com/koyashiro/VRCFaceMonitor.git?path=Packages/net.koyashiro.vrcfacemonitor` を貼り付けて `Add` を選択する。
+3. `https://github.com/koyashiro/VRCFaceMonitor.git` を貼り付けて `Add` を選択する。
 
    ![image](https://user-images.githubusercontent.com/6698252/126033265-67db425d-b0a8-498f-9910-e72f97eaaa7a.png)
 
