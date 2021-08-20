@@ -9,24 +9,6 @@ Shader "KoyashiroKohaku/FaceMonitor"
         [HideInInspector] _Z ("Z", Range(-100, 100)) = -10
         [HideInInspector] _W ("W", Range(-100, 100)) = 4
         _Alpha ("Alpha", Range(0, 1)) = 1
-        [Space]
-        // Desktop
-        [IntRange] _TargetResolution0_X ("Target resolution0 X", Range(0, 9999)) = 1920
-        [IntRange] _TargetResolution0_Y ("Target resolution0 Y", Range(0, 9999)) = 1006
-        [Space]
-        // Valve Index
-        [IntRange] _TargetResolution1_X ("Target resolution1 X", Range(0, 9999)) = 2188
-        [IntRange] _TargetResolution1_Y ("Target resolution1 Y", Range(0, 9999)) = 2432
-        [Space]
-        // Valve Index
-        [IntRange] _TargetResolution2_X ("Target resolution2 X", Range(0, 9999)) = 2208
-        [IntRange] _TargetResolution2_Y ("Target resolution2 Y", Range(0, 9999)) = 2452
-        [Space]
-        [IntRange] _TargetResolution3_X ("Target resolution3 X", Range(0, 9999)) = 0
-        [IntRange] _TargetResolution3_Y ("Target resolution3 Y", Range(0, 9999)) = 0
-        [Space]
-        [IntRange] _TargetResolution4_X ("Target resolution4 X", Range(0, 9999)) = 0
-        [IntRange] _TargetResolution4_Y ("Target resolution4 Y", Range(0, 9999)) = 0
     }
 
     SubShader
@@ -52,13 +34,13 @@ Shader "KoyashiroKohaku/FaceMonitor"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                uint id : SV_VERTEXID;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                float3 worldPos : TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -70,11 +52,33 @@ Shader "KoyashiroKohaku/FaceMonitor"
             float _W;
             float _Alpha;
 
-            float _TargetResolution0_X, _TargetResolution0_Y;
-            float _TargetResolution1_X, _TargetResolution1_Y;
-            float _TargetResolution2_X, _TargetResolution2_Y;
-            float _TargetResolution3_X, _TargetResolution3_Y;
-            float _TargetResolution4_X, _TargetResolution4_Y;
+            float2 _TargetResolution0, _TargetResolution1, _TargetResolution2, _TargetResolution3;
+
+            bool isTarget()
+            {
+                const float RAD_2_REG = 180 / UNITY_PI;
+                float fov = round(atan(1.0f / unity_CameraProjection._m11) * 2.0 * RAD_2_REG);
+
+                return
+                    // Desktop (ignore screenshot)
+                    (fov == 60 && !(_ScreenParams.x == 1920 && _ScreenParams.y == 1080) && !(_ScreenParams.x == 4096 && _ScreenParams.y == 2160))
+                    // VR
+                    || fov > 90;
+            }
+
+            bool inRange(float3 worldPos)
+            {
+                const float RANGE = 0.5;
+
+#if defined(USING_STEREO_MATRICES)
+                float3 cameraPos = (unity_StereoWorldSpaceCameraPos[0] + unity_StereoWorldSpaceCameraPos[1]) / 2;
+#else
+                float3 cameraPos = _WorldSpaceCameraPos;
+#endif
+
+                float dist = distance(worldPos, cameraPos);
+                return dist < RANGE;
+            }
 
             v2f vert (appdata v)
             {
@@ -88,29 +92,23 @@ Shader "KoyashiroKohaku/FaceMonitor"
                 vertex.w = _W;
 
                 o.vertex = mul(UNITY_MATRIX_P, vertex);
+                o.worldPos = mul(unity_ObjectToWorld, float4(0, 0, 0, 1)).xyz;
 
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col;
+                fixed4 col = tex2D(_MainTex, i.uv) * half4(1, 1, 1, _Alpha);
 
-                if ((_TargetResolution0_X == _ScreenParams.x && _TargetResolution0_Y == _ScreenParams.y)
-                    || (_TargetResolution1_X == _ScreenParams.x && _TargetResolution1_Y == _ScreenParams.y)
-                    || (_TargetResolution2_X == _ScreenParams.x && _TargetResolution2_Y == _ScreenParams.y)
-                    || (_TargetResolution3_X == _ScreenParams.x && _TargetResolution3_Y == _ScreenParams.y)
-                    || (_TargetResolution4_X == _ScreenParams.x && _TargetResolution4_Y == _ScreenParams.y))
-                {
-                    col = tex2D(_MainTex, i.uv) * half4(1, 1, 1, _Alpha);
-                }
-                else
+                if (!isTarget() || !inRange(i.worldPos))
                 {
                     discard;
                 }
 
                 return col;
             }
+
             ENDCG
         }
     }
