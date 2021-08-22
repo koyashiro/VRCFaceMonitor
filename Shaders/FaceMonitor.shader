@@ -61,7 +61,10 @@ Shader "KoyashiroKohaku/FaceMonitor"
 
                 return
                     // Desktop (ignore screenshot)
-                    (fov == 60 && !(_ScreenParams.x == 1920 && _ScreenParams.y == 1080) && !(_ScreenParams.x == 4096 && _ScreenParams.y == 2160))
+                    (fov == 60 && !(
+                        (_ScreenParams.x == 1280 && _ScreenParams.y == 720)
+                        || (_ScreenParams.x == 1920 && _ScreenParams.y == 1080)
+                        || (_ScreenParams.x == 4096 && _ScreenParams.y == 2160)))
                     // VR
                     || fov > 90;
             }
